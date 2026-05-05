@@ -1,0 +1,4 @@
+repository "ColorStick/ColorStick@9072126456864@cloud"
+  path "/"
+    br "/main"
+    co "/main"
