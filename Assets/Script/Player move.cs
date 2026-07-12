@@ -3,16 +3,38 @@ using UnityEngine.InputSystem;
 
 public class PlayerMove : MonoBehaviour
 {
+    [SerializeField] private float Speed;
+
+    private Rigidbody RB;
+
+    //Lateral movement
     private InputAction lateralMoveInput;
+    private Vector2 lateralMoveValue; 
 
     private void Awake()
     {
-        lateralMoveInput = InputSystem.actions.FindAction("Move");
-            }
+        RB = GetComponent<Rigidbody>();
+        //Verif
+        if(RB != null)
+        {
+            Debug.Log("Player_RB INITIALIZE");   
+        }
+        else
+        {
+            Debug.Log("Player_RB NULL");
+        }
 
-    private void Update()
+        lateralMoveInput = InputSystem.actions.FindAction("Move");
+    }
+
+    private void FixedUpdate()
     {
-        Vector2 lateralMoveValue = lateralMoveInput.ReadValue<Vector2>();
-        transform.Translate(lateralMoveValue.x * Time.deltaTime, 0f, 0f);
+        Move();
+    }
+
+    private void Move()
+    {
+        lateralMoveValue = lateralMoveInput.ReadValue<Vector2>();
+        transform.Translate(lateralMoveValue.x * Time.deltaTime * Speed, 0f, 0f);
     }
 }
