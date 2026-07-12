@@ -3,17 +3,21 @@ using UnityEngine.InputSystem;
 
 public class PlayerMove : MonoBehaviour
 {
+    [SerializeField] private float AccelPower;
     [SerializeField] private float Speed;
 
     private Rigidbody RB;
 
     //Lateral movement
-    private InputAction lateralMoveInput;
-    private Vector2 lateralMoveValue; 
+    private InputAction MoveInput;
+    private Vector2 MoveValue; 
+    private Vector2 LateralMoveValue;
 
     private void Awake()
     {
         RB = GetComponent<Rigidbody>();
+        MoveInput = InputSystem.actions.FindAction("Move");
+
         //Verif
         if(RB != null)
         {
@@ -23,18 +27,37 @@ public class PlayerMove : MonoBehaviour
         {
             Debug.Log("Player_RB NULL");
         }
-
-        lateralMoveInput = InputSystem.actions.FindAction("Move");
     }
 
     private void FixedUpdate()
     {
-        Move();
+        if(Speed > 0)
+        {
+            Move(); 
+        }
+        else
+        {
+            Debug.Log("WARNING : Speed equal 0 or is negative;");
+        }
+
+  
     }
 
     private void Move()
     {
-        lateralMoveValue = lateralMoveInput.ReadValue<Vector2>();
-        transform.Translate(lateralMoveValue.x * Time.deltaTime * Speed, 0f, 0f);
+        //SETUP
+        MoveValue = MoveInput.ReadValue<Vector2>();
+        LateralMoveValue = new Vector2(MoveValue.x * AccelPower, 0f);
+        Debug.Log("LateralMoveValue_New_Value : x." + LateralMoveValue.x + " y." + LateralMoveValue.y);
+
+        //Action
+        RB.AddForce(LateralMoveValue, ForceMode.VelocityChange);
+
+        //Limit
+        if(RB.linearVelocity.magnitude > Speed)
+        {
+            Vector2 ClampVelocity = RB.linearVelocity.normalized * Speed;
+            RB.linearVelocity = ClampVelocity;
+        }
     }
 }
