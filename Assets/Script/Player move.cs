@@ -3,8 +3,11 @@ using UnityEngine.InputSystem;
 
 public class PlayerMove : MonoBehaviour
 {
+    [Header("Run")]
     [SerializeField] private float AccelPower;
     [SerializeField] private float Speed;
+    [Header("Jump")]
+    [SerializeField] private float JumpPower;
 
     private Rigidbody RB;
 
@@ -13,10 +16,15 @@ public class PlayerMove : MonoBehaviour
     private Vector2 MoveValue; 
     private Vector2 LateralMoveValue;
 
+    //Jump
+    private InputAction JumpInput;
+    private Vector2 JumpVector;
+
     private void Awake()
     {
         RB = GetComponent<Rigidbody>();
         MoveInput = InputSystem.actions.FindAction("Move");
+        JumpInput = InputSystem.actions.FindAction("Jump");
 
         //Verif
         if(RB != null)
@@ -50,8 +58,7 @@ public class PlayerMove : MonoBehaviour
         LateralMoveValue = new Vector2(MoveValue.x * AccelPower, 0f);
         Debug.Log("LateralMoveValue_New_Value : x." + LateralMoveValue.x + " y." + LateralMoveValue.y);
 
-        //Action
-        RB.AddForce(LateralMoveValue, ForceMode.VelocityChange);
+
 
         //Limit
         if(RB.linearVelocity.magnitude > Speed)
@@ -59,5 +66,21 @@ public class PlayerMove : MonoBehaviour
             Vector2 ClampVelocity = RB.linearVelocity.normalized * Speed;
             RB.linearVelocity = ClampVelocity;
         }
+        //Action
+        else
+        {
+          RB.AddForce(LateralMoveValue, ForceMode.VelocityChange);
+        }
+    }
+    private void jump()
+    {
+        bool JumpInputValue = JumpInput.ReadValue<bool>();
+
+        if(JumpInputValue == true)
+        {
+            JumpVector = new Vector2(0f,JumpPower); 
+            RB.AddForce(JumpVector, ForceMode.Impulse);
+        }
     }
 }
+
