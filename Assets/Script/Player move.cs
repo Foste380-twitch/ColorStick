@@ -6,8 +6,10 @@ public class PlayerMove : MonoBehaviour
     [Header("Run")]
     [SerializeField] private float AccelPower;
     [SerializeField] private float Speed;
+    [SerializeField] private float Break;
     [Header("Jump")]
     [SerializeField] private float JumpPower;
+    [SerializeField] private float ModularJumpTime;
 
     private Rigidbody RB;
 
@@ -19,12 +21,15 @@ public class PlayerMove : MonoBehaviour
     //Jump
     private InputAction JumpInput;
     private Vector2 JumpVector;
+    private bool CanJump = false;
+
 
     private void Awake()
     {
         RB = GetComponent<Rigidbody>();
         MoveInput = InputSystem.actions.FindAction("Move");
         JumpInput = InputSystem.actions.FindAction("Jump");
+        JumpInput.started += Jump;
 
         //Verif
         if(RB != null)
@@ -39,16 +44,20 @@ public class PlayerMove : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(Speed > 0)
-        {
-            Move(); 
-        }
-        else
+        if(Speed <= 0)
         {
             Debug.Log("WARNING : Speed equal 0 or is negative;");
         }
+        Move(); 
+    }
 
-  
+    private void OnTriggerEnter(Collider Zone)
+    {
+        if (Zone.CompareTag("CZ-Jump"))
+        {
+            Debug.Log("Jump Initialize");
+            CanJump = true;
+        }
     }
 
     private void Move()
@@ -57,30 +66,46 @@ public class PlayerMove : MonoBehaviour
         MoveValue = MoveInput.ReadValue<Vector2>();
         LateralMoveValue = new Vector2(MoveValue.x * AccelPower, 0f);
         Debug.Log("LateralMoveValue_New_Value : x." + LateralMoveValue.x + " y." + LateralMoveValue.y);
-
-
-
-        //Limit
-        if(RB.linearVelocity.magnitude > Speed)
+        if(MoveValue.x != 0)
         {
-            Vector2 ClampVelocity = RB.linearVelocity.normalized * Speed;
-            RB.linearVelocity = ClampVelocity;
+            //Limit
+            if(Mathf.Abs(RB.linearVelocity.x) > Speed)
+            {
+                Vector2 ClampVelocity = new  Vector2(RB.linearVelocity.normalized.x * Speed, RB.linearVelocity.y);
+                RB.linearVelocity = ClampVelocity;
+            }
+            //Action
+            else
+            {
+                RB.AddForce(LateralMoveValue, ForceMode.VelocityChange);
+            }  
         }
-        //Action
-        else
+        //Break
+        else if(RB.linearVelocity.x != 0)
         {
-          RB.AddForce(LateralMoveValue, ForceMode.VelocityChange);
+            if(Mathf.Abs(RB.linearVelocity.x) >= Break)
+            {
+                Vector2 BreakVector = new Vector2(RB.linearVelocity.normalized.x * Break * -1, 0f);
+                RB.AddForce(BreakVector, ForceMode.VelocityChange);
+            }
+            else
+            {
+                Vector2 BreakVector = new Vector2(RB.linearVelocity.x * -1, 0f);
+                RB.AddForce(BreakVector, ForceMode.VelocityChange);
+            }
         }
     }
-    private void jump()
+
+    private void Jump(InputAction.CallbackContext context)
     {
-        bool JumpInputValue = JumpInput.ReadValue<bool>();
-
-        if(JumpInputValue == true)
+        Debug.Log("Jump press");
+        if(CanJump)
         {
-            JumpVector = new Vector2(0f,JumpPower); 
+            JumpVector = new Vector2(0f, JumpPower);
             RB.AddForce(JumpVector, ForceMode.Impulse);
+            CanJump = false;
         }
     }
+
 }
 
