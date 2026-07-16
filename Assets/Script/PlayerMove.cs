@@ -51,15 +51,6 @@ public class PlayerMove : MonoBehaviour
         {
             Debug.Log("Player_Jump NULL");
         }
-
-        if(AttInput != null)
-        {
-            Debug.Log("Player_Att INITIALIZE");   
-        }
-        else
-        {
-            Debug.Log("Player_Att NULL");
-        }
     }
 
     private void FixedUpdate()
@@ -82,7 +73,7 @@ public class PlayerMove : MonoBehaviour
 
     private void OnTriggerExit(Collider zone)
     {
-        if (zone.compareTag("CZ-Jump"))
+        if (zone.CompareTag("CZ-Jump"))
         {
             Debug.Log("Jump Desable");
             CanJump = false;
