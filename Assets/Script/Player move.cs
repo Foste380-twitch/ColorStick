@@ -23,10 +23,11 @@ public class PlayerMove : MonoBehaviour
     private Vector2 JumpVector;
     private bool CanJump = false;
 
-
     private void Awake()
     {
+        //Setup physics
         RB = GetComponent<Rigidbody>();
+        //Setup Movement
         MoveInput = InputSystem.actions.FindAction("Move");
         JumpInput = InputSystem.actions.FindAction("Jump");
         JumpInput.started += Jump;
@@ -36,9 +37,28 @@ public class PlayerMove : MonoBehaviour
         {
             Debug.Log("Player_RB INITIALIZE");   
         }
+
         else
         {
             Debug.Log("Player_RB NULL");
+        }
+
+        if(JumpInput != null)
+        {
+            Debug.Log("Player_Jump INITIALIZE");   
+        }
+        else
+        {
+            Debug.Log("Player_Jump NULL");
+        }
+
+        if(AttInput != null)
+        {
+            Debug.Log("Player_Att INITIALIZE");   
+        }
+        else
+        {
+            Debug.Log("Player_Att NULL");
         }
     }
 
@@ -53,10 +73,19 @@ public class PlayerMove : MonoBehaviour
 
     private void OnTriggerEnter(Collider Zone)
     {
-        if (Zone.CompareTag("CZ-Jump"))
+        if(Zone.CompareTag("CZ-Jump"))
         {
-            Debug.Log("Jump Initialize");
+            Debug.Log("Jump Enable");
             CanJump = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider zone)
+    {
+        if (zone.compareTag("CZ-Jump"))
+        {
+            Debug.Log("Jump Desable");
+            CanJump = false;
         }
     }
 
@@ -65,7 +94,8 @@ public class PlayerMove : MonoBehaviour
         //SETUP
         MoveValue = MoveInput.ReadValue<Vector2>();
         LateralMoveValue = new Vector2(MoveValue.x * AccelPower, 0f);
-        Debug.Log("LateralMoveValue_New_Value : x." + LateralMoveValue.x + " y." + LateralMoveValue.y);
+        //Debug.Log("LateralMoveValue_New_Value : x." + LateralMoveValue.x + " y." + LateralMoveValue.y);
+        
         if(MoveValue.x != 0)
         {
             //Limit
@@ -101,11 +131,9 @@ public class PlayerMove : MonoBehaviour
         Debug.Log("Jump press");
         if(CanJump)
         {
-            JumpVector = new Vector2(0f, JumpPower);
-            RB.AddForce(JumpVector, ForceMode.Impulse);
+            JumpVector = new Vector2(0f, JumpPower);            RB.AddForce(JumpVector, ForceMode.Impulse);
             CanJump = false;
         }
     }
-
 }
 
