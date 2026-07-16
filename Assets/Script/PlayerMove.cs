@@ -122,7 +122,8 @@ public class PlayerMove : MonoBehaviour
         Debug.Log("Jump press");
         if(CanJump)
         {
-            JumpVector = new Vector2(0f, JumpPower);            RB.AddForce(JumpVector, ForceMode.Impulse);
+            JumpVector = new Vector2(0f, JumpPower);
+            RB.AddForce(JumpVector, ForceMode.Impulse);
             CanJump = false;
         }
     }
