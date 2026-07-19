@@ -8,15 +8,13 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float UseDelay;
     [SerializeField] private Collider AttZone;
 
-    private InputSystem AttInput;
+    private InputAction AttInput;
     private bool CanAtt = true;
     
     private void OnAwake()
     {
-        
-        RB = GetComponent<RigidBody>();
-        AttInput = InputSystem.ation.FindAction("Attack");
-        AttInput.started = Action;
+        AttInput = InputSystem.actions.FindAction("Attack");
+        AttInput.started += Action;
 
         if (AttInput != null)
         {
@@ -28,16 +26,16 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    private void Action(InputAction.CallbackContext context)
+    private IEnumerator Action(InputAction.CallbackContext context)
     {
         if (CanAtt)
         {
             if (AttZone != null)
             {
-                AttZone.Enable = true;
+                AttZone.enabled = true;
                 CanAtt = false;
                 yield return new WaitForSeconds(UseDelay);
-                AttZone.Enable = false;
+                AttZone.enabled = false;
                 Renew();
             }
             else
@@ -46,7 +44,7 @@ public class PlayerAttack : MonoBehaviour
             }            
         }
     }
-    private void Renew()
+    private IEnumerator Renew()
     {
         yield return new WaitForSeconds(ReuseDelay);
         CanAtt = true;
