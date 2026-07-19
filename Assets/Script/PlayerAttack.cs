@@ -5,10 +5,9 @@ public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private float AttAnimDelay;
     [SerializeField] private float ReuseDelay;
-    [SerializeField] private float useDelay;
+    [SerializeField] private float UseDelay;
+    [SerializeField] private Collider AttZone;
 
-    private RigidBody RB;
-    private Collider AttZone;
     private InputSystem AttInput;
     private bool CanAtt = true;
     
@@ -33,7 +32,23 @@ public class PlayerAttack : MonoBehaviour
     {
         if (CanAtt)
         {
-            
+            if (AttZone != null)
+            {
+                AttZone.Enable = true;
+                CanAtt = false;
+                yield return new WaitForSeconds(UseDelay);
+                AttZone.Enable = false;
+                Renew();
+            }
+            else
+            {
+                Debug.Log("ERROR : Player_AttZone NULL");
+            }            
         }
+    }
+    private void Renew()
+    {
+        yield return new WaitForSeconds(ReuseDelay);
+        CanAtt = true;
     }
 }
