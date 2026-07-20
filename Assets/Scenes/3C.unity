@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!135 &121310166 stripped
+SphereCollider:
+  m_CorrespondingSourceObject: {fileID: 8509321833248315948, guid: 0dcb233832c14df4e944c0f994734055, type: 3}
+  m_PrefabInstance: {fileID: 2494808622482247530}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,6 +434,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4598637884139618483, guid: 0dcb233832c14df4e944c0f994734055, type: 3}
+      propertyPath: AttZone
+      value: 
+      objectReference: {fileID: 121310166}
+    - target: {fileID: 4598637884139618483, guid: 0dcb233832c14df4e944c0f994734055, type: 3}
+      propertyPath: UseDelay
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598637884139618483, guid: 0dcb233832c14df4e944c0f994734055, type: 3}
+      propertyPath: ReuseDelay
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6134525252798020198, guid: 0dcb233832c14df4e944c0f994734055, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -467,6 +484,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6134525252798020198, guid: 0dcb233832c14df4e944c0f994734055, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8509321833248315948, guid: 0dcb233832c14df4e944c0f994734055, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

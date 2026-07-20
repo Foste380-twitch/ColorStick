@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,7 +12,7 @@ public class PlayerAttack : MonoBehaviour
     private InputAction AttInput;
     private bool CanAtt = true;
     
-    private void OnAwake()
+    private void Awake()
     {
         AttInput = InputSystem.actions.FindAction("Attack");
         AttInput.started += Action;
@@ -26,7 +27,14 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    private IEnumerator Action(InputAction.CallbackContext context)
+    private void Action(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            StartCoroutine(ActionCoroutine());
+        }
+    }
+    private IEnumerator ActionCoroutine()
     {
         if (CanAtt)
         {
@@ -34,19 +42,27 @@ public class PlayerAttack : MonoBehaviour
             {
                 AttZone.enabled = true;
                 CanAtt = false;
+                Debug.Log("Player_AttZone ON");
                 yield return new WaitForSeconds(UseDelay);
+                Debug.Log("Player_AttZone OFF");
                 AttZone.enabled = false;
-                Renew();
+                StartCoroutine(Renew());
             }
             else
             {
                 Debug.Log("ERROR : Player_AttZone NULL");
             }            
         }
+        else
+        {
+            Debug.Log ("Player can not Attack : CanAtt = false");
+        }
     }
     private IEnumerator Renew()
     {
+        Debug.Log("Player Attack begin de renewing");
         yield return new WaitForSeconds(ReuseDelay);
         CanAtt = true;
+        Debug.Log("Player Attack Renew");
     }
 }
