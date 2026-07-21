@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 8502258958872883434}
   - component: {fileID: 6880062493109884236}
   - component: {fileID: 2561733603585423576}
+  - component: {fileID: 2099956474301473964}
   - component: {fileID: 4805987392695518973}
-  - component: {fileID: 4863906077033366878}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -145,6 +145,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &2099956474301473964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3471948459481538090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 816718ee990845b48a9166222e543372, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMove
+  AccelPower: 10
+  Speed: 15
+  Break: 1
+  JumpPower: 30
+  ModularJumpTime: 1
 --- !u!114 &4805987392695518973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,23 +192,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 1443730136320032975}
---- !u!114 &4863906077033366878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3471948459481538090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cd3633024b60e246b432dcbd2c9a4fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMove
-  AccelPower: 10
-  Speed: 15
-  Break: 1
-  JumpPower: 30
-  ModularJumpTime: 1
 --- !u!1 &6909622586361528406
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,7 +236,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0.60784316, b: 1, a: 0}
+  m_BackGroundColor: {r: 0, g: 0.22937478, b: 0.3773585, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
