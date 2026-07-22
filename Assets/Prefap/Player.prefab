@@ -12,8 +12,11 @@ GameObject:
   - component: {fileID: 6371999788814634213}
   - component: {fileID: 8502258958872883434}
   - component: {fileID: 6880062493109884236}
+  - component: {fileID: 7471802113504763581}
   - component: {fileID: 2561733603585423576}
   - component: {fileID: 2099956474301473964}
+  - component: {fileID: 5123614602562061850}
+  - component: {fileID: 5839998661046139005}
   - component: {fileID: 4805987392695518973}
   m_Layer: 0
   m_Name: Player
@@ -118,6 +121,27 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &7471802113504763581
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3471948459481538090}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2561733603585423576
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -159,9 +183,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMove
   AccelPower: 10
   Speed: 15
-  Break: 1
+  Break: 3
   JumpPower: 30
   ModularJumpTime: 1
+--- !u!114 &5123614602562061850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3471948459481538090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 637b13c8acf45304b8803ece94e964b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CapacityManager
+--- !u!114 &5839998661046139005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3471948459481538090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76f3790defeaf3641b77e854f2c09ba0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerFileManager
+  InitialeMesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  InitialCollider: {fileID: 6880062493109884236}
+  WSMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  WSCollider: {fileID: 7471802113504763581}
 --- !u!114 &4805987392695518973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,7 +240,7 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 1443730136320032975}

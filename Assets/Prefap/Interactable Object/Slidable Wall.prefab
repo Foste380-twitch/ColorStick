@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3189565302822897825}
   m_Layer: 0
   m_Name: Slidable Wall
-  m_TagString: Untagged
+  m_TagString: Wall Slide
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
