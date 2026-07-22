@@ -6,6 +6,7 @@ public class CapacityManager : MonoBehaviour
     //Wall Slide
     private InputAction WSInput;
     private bool WSActive = false;
+    private PlayerShapeManager ShapeManager;
 
     //Setup
     private void Awake()
@@ -14,7 +15,7 @@ public class CapacityManager : MonoBehaviour
 
         AwakeDbg();
     }
-    
+
     private void Update()
     {
         WallSlide();
@@ -40,11 +41,13 @@ public class CapacityManager : MonoBehaviour
         {
             WSActive = true;
             Debug.Log("Wall_Slide_Status : ACTIVE");
+            ShapeManager.SetNewShape(ShapeManager.WSMesh, ShapeManager.WSCollider);
         }
         else
         {
             WSActive = false;
             Debug.Log("Wall_Slide_Status : INACTIVE");
+            ShapeManager.SetNewShape(ShapeManager.InitialeMesh, ShapeManager.InitialCollider);
         }
     }
 }

@@ -851,6 +851,17 @@
                     "action": "Wall Slide",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "94b19a58-f2ea-467b-be24-5e02ba756152",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Wall Slide",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

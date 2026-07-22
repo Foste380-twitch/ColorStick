@@ -45,7 +45,7 @@ public class PlayerShapeManager : MonoBehaviour
     {
         if (ActualMesh != NewMesh)
         {
-            MeshFilter.mesh = NewMesh;
+            GetComponent<MeshFilter>().mesh = NewMesh;
             ActualMesh = NewMesh;
         }
         else
@@ -57,6 +57,7 @@ public class PlayerShapeManager : MonoBehaviour
         {
             ActualCollider.enabled = false;
             NewCollider.enabled = true;
+            ActualCollider = NewCollider;
         }
         else
         {
