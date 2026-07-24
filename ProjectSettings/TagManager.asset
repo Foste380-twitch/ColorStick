@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - CZ-Jump
+  - Wall Slide
   layers:
   - Default
   - TransparentFX

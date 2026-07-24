@@ -10,13 +10,20 @@ public class PlayerMove : MonoBehaviour
     [Header("Jump")]
     [SerializeField] private float JumpPower;
     [SerializeField] private float ModularJumpTime;
+    [Header("Wall")]
+    [SerializeField] private float WallSpeed;
+    [SerializeField] private float WallAccel;
+    [SerializeField] private float WallBreak;
 
-    private Rigidbody RB;
+    public Rigidbody RB;
+    private CapacityManager Capa;
 
     //Lateral movement
     private InputAction MoveInput;
-    private Vector2 MoveValue; 
+    private Vector2 MoveValue;
     private Vector2 LateralMoveValue;
+
+    //Vertical movement
 
     //Jump
     private InputAction JumpInput;
@@ -27,15 +34,19 @@ public class PlayerMove : MonoBehaviour
     {
         //Setup physics
         RB = GetComponent<Rigidbody>();
+
+        //Setup other script
+        Capa = GetComponent<CapacityManager>();
+
         //Setup Movement
         MoveInput = InputSystem.actions.FindAction("Move");
         JumpInput = InputSystem.actions.FindAction("Jump");
         JumpInput.started += Jump;
 
         //Verif
-        if(RB != null)
+        if (RB != null)
         {
-            Debug.Log("Player_RB INITIALIZE");   
+            Debug.Log("Player_RB INITIALIZE");
         }
 
         else
@@ -43,9 +54,9 @@ public class PlayerMove : MonoBehaviour
             Debug.Log("Player_RB NULL");
         }
 
-        if(JumpInput != null)
+        if (JumpInput != null)
         {
-            Debug.Log("Player_Jump INITIALIZE");   
+            Debug.Log("Player_Jump INITIALIZE");
         }
         else
         {
@@ -55,16 +66,23 @@ public class PlayerMove : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(Speed <= 0)
+        if (Speed <= 0)
         {
             Debug.Log("WARNING : Speed equal 0 or is negative;");
         }
-        Move(); 
+        if (!Capa.OnWall)
+        {
+            ClassicMove();
+        }
+        else
+        {
+            WallMove();
+        }
     }
 
     private void OnTriggerEnter(Collider Zone)
     {
-        if(Zone.CompareTag("CZ-Jump"))
+        if (Zone.CompareTag("CZ-Jump"))
         {
             Debug.Log("Jump Enable");
             CanJump = true;
@@ -80,31 +98,31 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    private void Move()
+    private void ClassicMove()
     {
         //SETUP
         MoveValue = MoveInput.ReadValue<Vector2>();
         LateralMoveValue = new Vector2(MoveValue.x * AccelPower, 0f);
         //Debug.Log("LateralMoveValue_New_Value : x." + LateralMoveValue.x + " y." + LateralMoveValue.y);
-        
-        if(MoveValue.x != 0)
+
+        if (MoveValue.x != 0)
         {
             //Limit
-            if(Mathf.Abs(RB.linearVelocity.x) > Speed)
+            if (Mathf.Abs(RB.linearVelocity.x) > Speed)
             {
-                Vector2 ClampVelocity = new  Vector2(RB.linearVelocity.normalized.x * Speed, RB.linearVelocity.y);
+                Vector2 ClampVelocity = new Vector2(RB.linearVelocity.normalized.x * Speed, RB.linearVelocity.y);
                 RB.linearVelocity = ClampVelocity;
             }
             //Action
             else
             {
                 RB.AddForce(LateralMoveValue, ForceMode.VelocityChange);
-            }  
+            }
         }
         //Break
-        else if(RB.linearVelocity.x != 0)
+        else if (RB.linearVelocity.x != 0)
         {
-            if(Mathf.Abs(RB.linearVelocity.x) >= Break)
+            if (Mathf.Abs(RB.linearVelocity.x) >= Break)
             {
                 Vector2 BreakVector = new Vector2(RB.linearVelocity.normalized.x * Break * -1, 0f);
                 RB.AddForce(BreakVector, ForceMode.VelocityChange);
@@ -120,11 +138,46 @@ public class PlayerMove : MonoBehaviour
     private void Jump(InputAction.CallbackContext context)
     {
         Debug.Log("Jump press");
-        if(CanJump)
+        if (CanJump && !Capa.OnWall)
         {
             JumpVector = new Vector2(0f, JumpPower);
             RB.AddForce(JumpVector, ForceMode.Impulse);
             CanJump = false;
+        }
+    }
+
+    private void WallMove()
+    {
+        //SETUP
+        MoveValue = MoveInput.ReadValue<Vector2>();
+        Vector2 FMoveValue = MoveValue.normalized * WallAccel;
+
+        if (MoveValue != Vector2.zero)
+        {
+            //Limit
+            if (RB.linearVelocity.magnitude > WallSpeed)
+            {
+                RB.linearVelocity = RB.linearVelocity.normalized * WallSpeed;
+            }
+            //Action
+            else
+            {
+                RB.AddForce(FMoveValue, ForceMode.VelocityChange);
+            }
+        }
+        //Break
+        else if (RB.linearVelocity.sqrMagnitude > 0)
+        {
+            if (RB.linearVelocity.magnitude >= WallBreak)
+            {
+                Vector2 BreakVector = RB.linearVelocity.normalized * WallBreak * -1;
+                RB.AddForce(BreakVector, ForceMode.VelocityChange);
+            }
+            else
+            {
+                Vector2 BreakVector = RB.linearVelocity * -1;
+                RB.AddForce(BreakVector, ForceMode.VelocityChange);
+            }
         }
     }
 }
