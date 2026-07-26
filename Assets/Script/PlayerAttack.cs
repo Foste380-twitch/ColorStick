@@ -11,7 +11,9 @@ public class PlayerAttack : MonoBehaviour
 
     private InputAction AttInput;
     private bool CanAtt = true;
-    
+
+    public float Damage;
+
     private void Awake()
     {
         AttInput = InputSystem.actions.FindAction("Attack");
@@ -51,11 +53,11 @@ public class PlayerAttack : MonoBehaviour
             else
             {
                 Debug.Log("ERROR : Player_AttZone NULL");
-            }            
+            }
         }
         else
         {
-            Debug.Log ("Player can not Attack : CanAtt = false");
+            Debug.Log("Player can not Attack : CanAtt = false");
         }
     }
     private IEnumerator Renew()

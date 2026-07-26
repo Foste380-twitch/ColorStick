@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CZ-Jump
   - TriggerAttack
+  - E-C0
   layers:
   - Default
   - TransparentFX

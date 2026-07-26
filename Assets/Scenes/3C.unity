@@ -377,6 +377,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ennemi FAIBLE
       objectReference: {fileID: 0}
+    - target: {fileID: 5274196855924692370, guid: 083d90ed3366bb347ae4a4375b265cf1, type: 3}
+      propertyPath: m_TagString
+      value: E-C0
+      objectReference: {fileID: 0}
     - target: {fileID: 8739778668047480925, guid: 083d90ed3366bb347ae4a4375b265cf1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4
