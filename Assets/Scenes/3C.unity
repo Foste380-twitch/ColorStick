@@ -365,6 +365,26 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e747b49a39dd55d44ae89172b72dede2, type: 3}
+--- !u!1 &1737375441 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5274196855924692370, guid: 083d90ed3366bb347ae4a4375b265cf1, type: 3}
+  m_PrefabInstance: {fileID: 939435749231551572}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1737375443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737375441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 298516f78c41ed849a4e22eedbb4d67c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnnemiClassicBehaviour
+  Color: 0
+  HP: 1
+  ID: ETB001
 --- !u!1001 &939435749231551572
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -373,6 +393,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2347015342931893708, guid: 083d90ed3366bb347ae4a4375b265cf1, type: 3}
+      propertyPath: m_Constraints
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 5274196855924692370, guid: 083d90ed3366bb347ae4a4375b265cf1, type: 3}
       propertyPath: m_Name
       value: Ennemi FAIBLE
@@ -424,7 +448,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5274196855924692370, guid: 083d90ed3366bb347ae4a4375b265cf1, type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 1737375443}
   m_SourcePrefab: {fileID: 100100000, guid: 083d90ed3366bb347ae4a4375b265cf1, type: 3}
 --- !u!1001 &2494808622482247530
 PrefabInstance:
