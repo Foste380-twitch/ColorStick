@@ -5,7 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - CZ-Jump
-  - Wall Slide
+  - TriggerAttack
+  - E-C0
   layers:
   - Default
   - TransparentFX
